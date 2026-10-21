@@ -27,7 +27,9 @@ export function AsturiasLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const filteredGallery = useMemo(() => active === 'Todas' ? gallery : gallery.filter((item) => item.category === active), [active])
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: filteredGallery.length > 1, align: 'start', duration: 28 })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', duration: 28 })
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12)
@@ -38,12 +40,27 @@ export function AsturiasLanding() {
 
   useEffect(() => {
     if (!emblaApi || filteredGallery.length < 2) return
-    const autoplay = window.setInterval(() => emblaApi.scrollNext(), 4000)
+    const autoplay = window.setInterval(() => emblaApi.canScrollNext() && emblaApi.scrollNext(), 4000)
     return () => window.clearInterval(autoplay)
   }, [emblaApi, filteredGallery.length, active])
 
   useEffect(() => {
-    emblaApi?.reInit({ loop: filteredGallery.length > 1 })
+    if (!emblaApi) return
+    const updateControls = () => {
+      setCanScrollPrev(emblaApi.canScrollPrev())
+      setCanScrollNext(emblaApi.canScrollNext())
+    }
+    updateControls()
+    emblaApi.on('select', updateControls)
+    emblaApi.on('reInit', updateControls)
+    return () => {
+      emblaApi.off('select', updateControls)
+      emblaApi.off('reInit', updateControls)
+    }
+  }, [emblaApi])
+
+  useEffect(() => {
+    emblaApi?.reInit({ loop: false })
     emblaApi?.scrollTo(0, true)
   }, [emblaApi, active, filteredGallery.length])
 
@@ -91,11 +108,11 @@ export function AsturiasLanding() {
 
       <section id="galeria" className="mx-auto max-w-7xl px-6 py-24 lg:py-32">
         <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#6f9f94]">Una mirada a Asturias</p><h2 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">Nuestro Local y Especialidades</h2><p className="mt-4 max-w-xl text-slate-600">Descubre nuestras tapas, el ambiente y las instalaciones en Arrecife.</p></div><div className="flex flex-wrap gap-2" role="tablist" aria-label="Filtrar galería">{categories.map((category) => <button key={category} onClick={() => setActive(category)} role="tab" aria-selected={active === category} className={`rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${active === category ? 'bg-[#ACCCC3] text-slate-900' : 'bg-white text-slate-500 hover:bg-slate-100'}`}>{category}</button>)}</div></div>
-        <div className="relative mt-10">
+        <div className="relative mx-auto mt-10 max-w-7xl px-6 lg:px-10">
           <div className="overflow-hidden" ref={emblaRef} aria-live="polite">
-            <div className="flex touch-pan-y">
+            <div className="flex touch-pan-y gap-6">
               {filteredGallery.map((item) => (
-                <article key={item.title} className="min-w-0 flex-[0_0_100%] pl-4 first:pl-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]" role="group" aria-label={`${item.title}, ${item.category}`}>
+                <article key={item.title} className="min-w-0 flex-[0_0_calc(83.333%_-_5px)] sm:flex-[0_0_calc(50%_-_12px)] lg:flex-[0_0_calc(33.333%_-_16px)]" role="group" aria-label={`${item.title}, ${item.category}`}>
                   <div className="group relative h-[360px] overflow-hidden rounded-3xl sm:h-[400px]">
                     <img src={item.image} alt={item.title} className="size-full object-cover transition duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" />
@@ -110,8 +127,8 @@ export function AsturiasLanding() {
               {filteredGallery.map((item, index) => <button key={item.title} type="button" aria-label={`Ir a la imagen ${index + 1}: ${item.title}`} onClick={() => emblaApi?.scrollTo(index)} className="size-2 rounded-full bg-[#ACCCC3] opacity-45 transition-opacity hover:opacity-80" />)}
             </div>
             <div className="flex gap-2">
-              <button type="button" aria-label="Imagen anterior" onClick={() => emblaApi?.scrollPrev()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowLeft className="size-5" /></button>
-              <button type="button" aria-label="Imagen siguiente" onClick={() => emblaApi?.scrollNext()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowRight className="size-5" /></button>
+              <button type="button" aria-label="Imagen anterior" disabled={!canScrollPrev} onClick={() => emblaApi?.scrollPrev()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-35"><ArrowLeft className="size-5" /></button>
+              <button type="button" aria-label="Imagen siguiente" disabled={!canScrollNext} onClick={() => emblaApi?.scrollNext()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-35"><ArrowRight className="size-5" /></button>
             </div>
           </div>
         </div>
