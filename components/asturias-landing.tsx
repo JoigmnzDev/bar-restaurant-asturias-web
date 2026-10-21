@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
-import { ArrowLeft, ArrowRight, ArrowUpRight, MessageSquare, Phone, Star } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Menu, MessageSquare, Phone, Star, X } from 'lucide-react'
 
 const categories = ['Todas', 'Nuestras Tapas', 'El Local', 'Ambiente'] as const
 
@@ -24,8 +24,17 @@ function PillLink({ children, href, variant = 'primary' }: { children: React.Rea
 
 export function AsturiasLanding() {
   const [active, setActive] = useState<Category>('Todas')
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const filteredGallery = useMemo(() => active === 'Todas' ? gallery : gallery.filter((item) => item.category === active), [active])
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: filteredGallery.length > 1, align: 'start', duration: 28 })
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 12)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     if (!emblaApi || filteredGallery.length < 2) return
@@ -40,7 +49,7 @@ export function AsturiasLanding() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#FAFAFA] text-slate-900">
-      <header className="absolute inset-x-0 top-0 z-20">
+      <header className={`fixed top-0 inset-x-0 z-50 border-b transition-all duration-300 ease-in-out ${isScrolled ? 'bg-white/95 shadow-sm backdrop-blur-md border-slate-200' : 'bg-white/80 backdrop-blur-md border-slate-200/60'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:py-7">
           <a href="#inicio" className="flex items-center gap-3" aria-label="Bar & Restaurante Asturias, inicio">
             <span className="flex size-10 items-center justify-center rounded-full bg-[#ACCCC3] font-serif text-xl font-bold text-slate-900">A</span>
@@ -53,8 +62,16 @@ export function AsturiasLanding() {
             <a className="inline-flex items-center gap-2 px-2 py-3 text-sm font-semibold text-slate-700" href="tel:+34928812345"><Phone className="size-4" /> <span className="hidden xl:inline">928 812 345</span></a>
             <PillLink href={whatsapp}><MessageSquare className="size-4" /> Reservar por WhatsApp</PillLink>
           </div>
-          <a href={whatsapp} className="flex size-11 items-center justify-center rounded-full bg-[#ACCCC3] sm:hidden" aria-label="Reservar por WhatsApp"><MessageSquare className="size-5" /></a>
+          <div className="flex items-center gap-2 sm:hidden">
+            <a href={whatsapp} className="flex size-11 items-center justify-center rounded-full bg-[#ACCCC3]" aria-label="Reservar por WhatsApp"><MessageSquare className="size-5" /></a>
+            <button type="button" onClick={() => setIsMobileMenuOpen((open) => !open)} className="flex size-11 items-center justify-center rounded-full border border-slate-200 bg-white/70 text-slate-800" aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation" aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}>{isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}</button>
+          </div>
         </div>
+        {isMobileMenuOpen && <nav id="mobile-navigation" className="absolute top-full inset-x-0 border-b border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur-lg sm:hidden" aria-label="Navegación móvil">
+          <div className="flex flex-col gap-1">
+            {['Inicio', 'Galería', 'Sobre Nosotros', 'Ubicación'].map((label) => <a key={label} href={`#${label === 'Inicio' ? 'inicio' : label === 'Galería' ? 'galeria' : label === 'Sobre Nosotros' ? 'nosotros' : 'ubicacion'}`} onClick={() => setIsMobileMenuOpen(false)} className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100">{label}</a>)}
+          </div>
+        </nav>}
       </header>
 
       <section id="inicio" className="relative isolate flex min-h-[720px] items-end overflow-hidden pt-32 lg:min-h-[800px] lg:items-center">
