@@ -24,24 +24,16 @@ function PillLink({ children, href, variant = 'primary' }: { children: React.Rea
 
 export function AsturiasLanding() {
   const [active, setActive] = useState<Category>('Todas')
-  const [selectedSlide, setSelectedSlide] = useState(0)
   const filteredGallery = useMemo(() => active === 'Todas' ? gallery : gallery.filter((item) => item.category === active), [active])
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: filteredGallery.length > 1, align: 'start', duration: 28 })
 
   useEffect(() => {
     if (!emblaApi || filteredGallery.length < 2) return
     const autoplay = window.setInterval(() => emblaApi.scrollNext(), 4000)
-    const onSelect = () => setSelectedSlide(emblaApi.selectedScrollSnap())
-    onSelect()
-    emblaApi.on('select', onSelect)
-    return () => {
-      window.clearInterval(autoplay)
-      emblaApi.off('select', onSelect)
-    }
+    return () => window.clearInterval(autoplay)
   }, [emblaApi, filteredGallery.length, active])
 
   useEffect(() => {
-    setSelectedSlide(0)
     emblaApi?.reInit({ loop: filteredGallery.length > 1 })
     emblaApi?.scrollTo(0, true)
   }, [emblaApi, active, filteredGallery.length])
@@ -83,39 +75,26 @@ export function AsturiasLanding() {
       <section id="galeria" className="mx-auto max-w-7xl px-6 py-24 lg:py-32">
         <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#6f9f94]">Una mirada a Asturias</p><h2 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">Nuestro Local y Especialidades</h2><p className="mt-4 max-w-xl text-slate-600">Descubre nuestras tapas, el ambiente y las instalaciones en Arrecife.</p></div><div className="flex flex-wrap gap-2" role="tablist" aria-label="Filtrar galería">{categories.map((category) => <button key={category} onClick={() => setActive(category)} role="tab" aria-selected={active === category} className={`rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${active === category ? 'bg-[#ACCCC3] text-slate-900' : 'bg-white text-slate-500 hover:bg-slate-100'}`}>{category}</button>)}</div></div>
         <div className="relative mt-10">
-          <div className="hidden columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4 md:block" aria-live="polite">
-            {filteredGallery.map((item) => (
-              <article key={item.title} className="group relative mb-4 break-inside-avoid overflow-hidden rounded-2xl" aria-label={`${item.title}, ${item.category}`}>
-                <img src={item.image} alt={item.title} className="block h-auto w-full transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs font-medium uppercase tracking-wider text-white/75">{item.category}</p><h3 className="mt-1 font-serif text-xl">{item.title}</h3></div>
-              </article>
-            ))}
-          </div>
-
-          <div className="md:hidden" aria-live="polite">
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex touch-pan-y">
-                {filteredGallery.map((item) => (
-                  <article key={item.title} className="min-w-0 flex-[0_0_83.333%] pl-4 first:pl-0" role="group" aria-label={`${item.title}, ${item.category}`}>
-                    <div className="group relative h-[390px] overflow-hidden rounded-2xl">
-                      <img src={item.image} alt={item.title} className="size-full object-cover transition duration-700 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs font-medium uppercase tracking-wider text-white/75">{item.category}</p><h3 className="mt-1 font-serif text-xl">{item.title}</h3></div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+          <div className="overflow-hidden" ref={emblaRef} aria-live="polite">
+            <div className="flex touch-pan-y">
+              {filteredGallery.map((item) => (
+                <article key={item.title} className="min-w-0 flex-[0_0_100%] pl-4 first:pl-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]" role="group" aria-label={`${item.title}, ${item.category}`}>
+                  <div className="group relative h-[360px] overflow-hidden rounded-3xl sm:h-[400px]">
+                    <img src={item.image} alt={item.title} className="size-full object-cover transition duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs font-medium uppercase tracking-wider text-white/70">{item.category}</p><h3 className="mt-1 font-serif text-xl">{item.title}</h3></div>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
-
-          <div className="mt-6 flex items-center justify-between md:hidden">
+          <div className="mt-6 flex items-center justify-between">
             <div className="flex gap-2" aria-label="Paginación de la galería">
-              {filteredGallery.map((item, index) => <button key={item.title} type="button" aria-label={`Ir a la imagen ${index + 1}: ${item.title}`} aria-current={selectedSlide === index ? 'true' : undefined} onClick={() => emblaApi?.scrollTo(index)} className={`size-2 rounded-full bg-[#ACCCC3] transition-all ${selectedSlide === index ? 'scale-125 opacity-100' : 'opacity-40'}`} />)}
+              {filteredGallery.map((item, index) => <button key={item.title} type="button" aria-label={`Ir a la imagen ${index + 1}: ${item.title}`} onClick={() => emblaApi?.scrollTo(index)} className="size-2 rounded-full bg-[#ACCCC3] opacity-45 transition-opacity hover:opacity-80" />)}
             </div>
             <div className="flex gap-2">
-              <button type="button" aria-label="Imagen anterior" onClick={() => emblaApi?.scrollPrev()} className="flex size-10 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowLeft className="size-4" /></button>
-              <button type="button" aria-label="Imagen siguiente" onClick={() => emblaApi?.scrollNext()} className="flex size-10 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowRight className="size-4" /></button>
+              <button type="button" aria-label="Imagen anterior" onClick={() => emblaApi?.scrollPrev()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowLeft className="size-5" /></button>
+              <button type="button" aria-label="Imagen siguiente" onClick={() => emblaApi?.scrollNext()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowRight className="size-5" /></button>
             </div>
           </div>
         </div>
