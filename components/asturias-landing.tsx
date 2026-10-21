@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { ArrowUpRight, MessageSquare, Phone, Star } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, MessageSquare, Phone, Star } from 'lucide-react'
 
 const categories = ['Todas', 'Nuestras Tapas', 'El Local', 'Ambiente'] as const
 
@@ -24,6 +25,18 @@ function PillLink({ children, href, variant = 'primary' }: { children: React.Rea
 export function AsturiasLanding() {
   const [active, setActive] = useState<Category>('Todas')
   const filteredGallery = useMemo(() => active === 'Todas' ? gallery : gallery.filter((item) => item.category === active), [active])
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: filteredGallery.length > 1, align: 'start', duration: 28 })
+
+  useEffect(() => {
+    if (!emblaApi || filteredGallery.length < 2) return
+    const autoplay = window.setInterval(() => emblaApi.scrollNext(), 4000)
+    return () => window.clearInterval(autoplay)
+  }, [emblaApi, filteredGallery.length, active])
+
+  useEffect(() => {
+    emblaApi?.reInit({ loop: filteredGallery.length > 1 })
+    emblaApi?.scrollTo(0, true)
+  }, [emblaApi, active, filteredGallery.length])
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#FAFAFA] text-slate-900">
@@ -61,7 +74,30 @@ export function AsturiasLanding() {
 
       <section id="galeria" className="mx-auto max-w-7xl px-6 py-24 lg:py-32">
         <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#6f9f94]">Una mirada a Asturias</p><h2 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">Nuestro Local y Especialidades</h2><p className="mt-4 max-w-xl text-slate-600">Descubre nuestras tapas, el ambiente y las instalaciones en Arrecife.</p></div><div className="flex flex-wrap gap-2" role="tablist" aria-label="Filtrar galería">{categories.map((category) => <button key={category} onClick={() => setActive(category)} role="tab" aria-selected={active === category} className={`rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${active === category ? 'bg-[#ACCCC3] text-slate-900' : 'bg-white text-slate-500 hover:bg-slate-100'}`}>{category}</button>)}</div></div>
-        <div className="mt-10 grid auto-rows-[190px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">{filteredGallery.map((item) => <article key={item.title} className={`group relative overflow-hidden rounded-3xl ${item.className}`}><img src={item.image} alt={item.title} className="size-full object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" /><div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs font-medium uppercase tracking-wider text-white/70">{item.category}</p><h3 className="mt-1 font-serif text-xl">{item.title}</h3></div></article>)}</div>
+        <div className="relative mt-10">
+          <div className="overflow-hidden" ref={emblaRef} aria-live="polite">
+            <div className="flex touch-pan-y">
+              {filteredGallery.map((item) => (
+                <article key={item.title} className="min-w-0 flex-[0_0_100%] pl-4 first:pl-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]" role="group" aria-label={`${item.title}, ${item.category}`}>
+                  <div className="group relative h-[360px] overflow-hidden rounded-3xl sm:h-[400px]">
+                    <img src={item.image} alt={item.title} className="size-full object-cover transition duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs font-medium uppercase tracking-wider text-white/70">{item.category}</p><h3 className="mt-1 font-serif text-xl">{item.title}</h3></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-between">
+            <div className="flex gap-2" aria-label="Paginación de la galería">
+              {filteredGallery.map((item, index) => <button key={item.title} type="button" aria-label={`Ir a la imagen ${index + 1}: ${item.title}`} onClick={() => emblaApi?.scrollTo(index)} className="size-2 rounded-full bg-[#ACCCC3] opacity-45 transition-opacity hover:opacity-80" />)}
+            </div>
+            <div className="flex gap-2">
+              <button type="button" aria-label="Imagen anterior" onClick={() => emblaApi?.scrollPrev()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowLeft className="size-5" /></button>
+              <button type="button" aria-label="Imagen siguiente" onClick={() => emblaApi?.scrollNext()} className="flex size-11 items-center justify-center rounded-full border border-[#ACCCC3] text-[#6f9f94] transition-colors hover:bg-[#ACCCC3] hover:text-slate-900"><ArrowRight className="size-5" /></button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="nosotros" className="bg-white px-6 py-24 lg:py-32"><div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_0.8fr] lg:items-center"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#6f9f94]">Desde 1998</p><h2 className="max-w-xl font-serif text-4xl font-bold leading-tight sm:text-5xl">Una cocina honesta, una mesa siempre abierta.</h2><div className="mt-7 space-y-5 text-base leading-7 text-slate-600"><p>En Asturias creemos que comer bien empieza por cuidar lo esencial: producto cercano, recetas con memoria y el tiempo necesario para hacer las cosas bien.</p><p>Somos un bar de barrio con alma de casa. Aquí cada plato sale con cariño y cada visita se convierte en una conversación más.</p></div><a href="#ubicacion" className="mt-8 inline-flex items-center gap-2 font-semibold text-slate-900 underline decoration-[#ACCCC3] decoration-4 underline-offset-4">Ven a conocernos <ArrowUpRight className="size-4" /></a></div><div className="rounded-[2rem] border border-[#ACCCC3]/30 bg-[#ACCCC3]/15 p-8 sm:p-12"><span className="font-serif text-6xl leading-none text-[#6f9f94]">“</span><blockquote className="mt-3 font-serif text-3xl leading-tight text-slate-800">Aquí venimos a comer rico, a conversar sin prisa y a sentirnos como en casa.</blockquote><div className="mt-8 flex items-center gap-3 text-sm font-semibold text-slate-600"><span className="size-2 rounded-full bg-[#6f9f94]" /> La familia Asturias</div></div></div></section>
