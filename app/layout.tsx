@@ -1,10 +1,10 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import './globals.css'
+import './globals.scss'
 
 export const metadata: Metadata = {
-  title: 'Bar & Restaurante Asturias | Arrecife, Lanzarote',
-  description: 'Gastronomía tradicional, tapas y momentos especiales en el corazón de Arrecife.',
+  title: 'Asturias | Bar & Restaurante en Arrecife',
+  description: 'Cocina honesta, producto cercano y una mesa abierta en el corazón de Arrecife.',
   generator: 'v0.app',
   icons: {
     icon: [
