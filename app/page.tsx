@@ -7,7 +7,15 @@ import About from "@/components/pages/landing/about";
 import Features from "@/components/pages/landing/features";
 import Testimonials from "@/components/pages/landing/testimonials";
 import Team from "@/components/pages/landing/team";
-import InfiniteGallery from "@/components/pages/landing/infinite-gallery";
+import dynamic from "next/dynamic";
+
+const InfiniteGallery = dynamic(
+  () =>
+    import("@/components/pages/landing/infinite-gallery").then(
+      (mod) => mod.InfiniteGallery,
+    ),
+  { ssr: false },
+);
 
 export default function Home() {
   return (
