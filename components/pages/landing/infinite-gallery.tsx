@@ -122,3 +122,4 @@ export const InfiniteGallery = () => {
 };
 
 export default InfiniteGallery;
+
