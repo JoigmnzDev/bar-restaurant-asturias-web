@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Mousewheel } from "swiper/modules";
@@ -7,6 +8,12 @@ import { Autoplay, Mousewheel } from "swiper/modules";
 import "swiper/css";
 
 export const InfiniteGallery = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const images = [
     {
       src: "/images/dishes/cachopo.jpg",
@@ -65,6 +72,14 @@ export const InfiniteGallery = () => {
       alt: "Bienmesabe",
     },
   ];
+
+  if (!mounted) {
+    return (
+      <section className="w-full bg-[#FAF8F5] overflow-hidden">
+        <div className="h-48 w-full bg-[#FAF8F5]" />
+      </section>
+    );
+  }
 
   return (
     <section className="w-full bg-[#FAF8F5] overflow-hidden">
