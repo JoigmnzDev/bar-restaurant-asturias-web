@@ -9,6 +9,7 @@ import {
   ListIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import { siteConfig } from "@/config/site";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,15 +34,19 @@ export const Navbar = () => {
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6">
             <a
-              href="tel:+34928000000"
+              href={`tel:${siteConfig.contact.phone}`}
               className="flex items-center gap-1.5 hover:text-amber-500 transition-colors"
             >
               <PhoneIcon size={14} className="text-amber-500" />
-              <span>+34 928 00 00 00</span>
+              <span>{siteConfig.contact.phone}</span>
             </a>
             <div className="hidden md:flex items-center gap-1.5">
               <ClockIcon size={14} className="text-amber-500" />
-              <span>Mar - Dom: 01:00 - 23:00 / Cerrado Lunes</span>
+              <span>
+                {"Lunes - Sábado: "}
+                {siteConfig.openingHours.weekdays} / {"Lunes: "}
+                {siteConfig.openingHours.tuesday}
+              </span>
             </div>
           </div>
         </div>

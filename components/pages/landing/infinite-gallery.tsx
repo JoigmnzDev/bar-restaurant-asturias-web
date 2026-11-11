@@ -9,12 +9,12 @@ import "swiper/css";
 export const InfiniteGallery = () => {
   const images = [
     {
-      src: "/images/dishes/croquettes.jpg",
-      alt: "Croquetas Caseras",
-    },
-    {
       src: "/images/dishes/cachopo.jpg",
       alt: "Cachopo Asturiano 800g",
+    },
+    {
+      src: "/images/dishes/croquettes.jpg",
+      alt: "Croquetas Caseras",
     },
     {
       src: "/images/dishes/crispy-chicken.jpg",
@@ -49,16 +49,16 @@ export const InfiniteGallery = () => {
       alt: "Queso Ahumado",
     },
     {
-      src: "/images/dishes/tuna-tartare.jpg",
-      alt: "Tartar de Atún",
-    },
-    {
       src: "/images/dishes/russian-salad.jpg",
       alt: "Ensaladilla Rusa",
     },
     {
       src: "/images/dishes/seafood-paella.jpg",
       alt: "Paella de Pescado y Mariscos",
+    },
+    {
+      src: "/images/dishes/tuna-tartare.jpg",
+      alt: "Tartar de Atún",
     },
     {
       src: "/images/dishes/spanish-almond-cream.jpg",

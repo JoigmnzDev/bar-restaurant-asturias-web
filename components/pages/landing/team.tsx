@@ -12,6 +12,11 @@ import "swiper/css/navigation";
 export const Team = () => {
   const teamMembers = [
     {
+      name: "Yariel Interian",
+      role: "Jefe de Sala",
+      image: "/images/team/yariel-interian.jpg",
+    },
+    {
       name: "Alfredo",
       role: "Segundo Cocinero",
       image: "/images/team/alfredo.jpg",
@@ -22,12 +27,7 @@ export const Team = () => {
       image: "/images/team/alfred-nabutil.jpg",
     },
     {
-      name: "Yariel Interian",
-      role: "Jefe de Sala",
-      image: "/images/team/yariel-interian.jpg",
-    },
-    {
-      name: "Jen Jen Abaag Nabutil",
+      name: "Reina Nabutil",
       role: "Camarera",
       image: "/images/team/jen-jen-abaag-nabutil.jpg",
     },

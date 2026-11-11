@@ -28,7 +28,7 @@ export const About = () => {
             Un espacio donde la buena comida y el ambiente acogedor se unen para
             crear momentos especiales en Arrecife.
           </p>
-          <div className="flex items-center justify-between pt-4 border-t border-stone-200/80 mt-2">
+          <div className="felx- hidden items-center justify-between pt-4 border-t border-stone-200/80 mt-2">
             <div>
               <span className="font-serif italic text-xl text-stone-800 block">
                 Chef Alfred Nabutil
@@ -50,7 +50,7 @@ export const About = () => {
                 className="object-cover"
               />
             </div>
-            <div className="absolute bottom-0 left-0 w-[55%] h-[60%] rounded-lg overflow-hidden shadow-xl border-4 border-[#FAF8F5]">
+            <div className="absolute- hidden bottom-0 left-0 w-[55%] h-[60%] rounded-lg overflow-hidden shadow-xl border-4 border-[#FAF8F5]">
               <Image
                 src="/images/about/chef-preparing-dish.jpg"
                 alt="Cocinero preparando plato"

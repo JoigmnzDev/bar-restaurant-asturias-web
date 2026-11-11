@@ -6,6 +6,7 @@ import {
   ClockIcon,
   ForkKnifeIcon,
 } from "@phosphor-icons/react/dist/ssr";
+import { siteConfig } from "@/config/site";
 
 export const Footer = () => {
   return (
@@ -27,7 +28,7 @@ export const Footer = () => {
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://instagram.com/bar_restaurante_asturias"
+                href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
@@ -90,18 +91,20 @@ export const Footer = () => {
               <div className="flex justify-between border-b border-stone-200/60 pb-1.5">
                 <span>Mar - Sáb:</span>
                 <span className="font-medium text-stone-800">
-                  01:00 - 23:00
+                  {siteConfig.openingHours.weekdays}
                 </span>
               </div>
               <div className="flex justify-between border-b border-stone-200/60 pb-1.5">
                 <span>Domingos:</span>
                 <span className="font-medium text-stone-800">
-                  01:00 - 04:00 | 19:00 - 23:00
+                  {siteConfig.openingHours.sunday}
                 </span>
               </div>
               <div className="flex justify-between pt-0.5">
                 <span>Lunes:</span>
-                <span className="text-amber-700 font-medium">Cerrado</span>
+                <span className="text-amber-700 font-medium">
+                  {siteConfig.openingHours.tuesday}
+                </span>
               </div>
             </div>
           </div>
@@ -119,18 +122,18 @@ export const Footer = () => {
                   className="text-amber-600 shrink-0 mt-0.5"
                 />
                 <span>
-                  Calle León y Castillo, 12
+                  {siteConfig.location.address}
                   <br />
-                  35500 Arrecife, Lanzarote
+                  {siteConfig.location.city}, {siteConfig.location.postalCode}
                 </span>
               </p>
               <p className="flex items-center gap-2">
                 <PhoneIcon size={16} className="text-amber-600 shrink-0" />
                 <a
-                  href="tel:+34928000000"
+                  href={`tel:${siteConfig.contact.phone}`}
                   className="hover:text-amber-600 transition-colors"
                 >
-                  +34 928 00 00 00
+                  {siteConfig.contact.phone}
                 </a>
               </p>
             </div>
