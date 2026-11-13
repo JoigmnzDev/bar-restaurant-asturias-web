@@ -1,57 +1,91 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
-
-import { ForkKnifeIcon } from "@phosphor-icons/react/dist/ssr";
+import { ForkKnifeIcon } from "@phosphor-icons/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
+const emptySubscribe = () => () => {};
+
+const TEAM_MEMBERS = [
+  {
+    number: "01",
+    name: "Yariel Interian",
+    role: "Jefe de Sala",
+    image: "/images/team/yariel-interian.jpg",
+  },
+  {
+    number: "02",
+    name: "Alfredo",
+    role: "Segundo Cocinero",
+    image: "/images/team/alfredo.jpg",
+  },
+  {
+    number: "03",
+    name: "Alfred Nabutil",
+    role: "Chef",
+    image: "/images/team/alfred-nabutil.jpg",
+  },
+  {
+    number: "04",
+    name: "Reina Nabutil",
+    role: "Camarera",
+    image: "/images/team/jen-jen-abaag-nabutil.jpg",
+  },
+  {
+    number: "05",
+    name: "Antonio",
+    role: "Ayudante de Cocina",
+    image: "/images/team/antonio.jpg",
+  },
+];
+
 export const Team = () => {
-  const teamMembers = [
-    {
-      name: "Yariel Interian",
-      role: "Jefe de Sala",
-      image: "/images/team/yariel-interian.jpg",
-    },
-    {
-      name: "Alfredo",
-      role: "Segundo Cocinero",
-      image: "/images/team/alfredo.jpg",
-    },
-    {
-      name: "Alfred Nabutil",
-      role: "Chef",
-      image: "/images/team/alfred-nabutil.jpg",
-    },
-    {
-      name: "Reina Nabutil",
-      role: "Camarera",
-      image: "/images/team/jen-jen-abaag-nabutil.jpg",
-    },
-  ];
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   return (
-    <section id="team" className="bg-white py-20 px-4 sm:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="flex items-center justify-center gap-2 text-amber-700 font-medium text-xs tracking-[0.2em] uppercase mb-2">
-            <ForkKnifeIcon size={16} className="text-amber-600" />
+    <section
+      id="team"
+      className="border-b border-stone-200/80 bg-[#FAF8F5] px-4 py-24 sm:px-8 lg:py-32"
+    >
+      <div className="mx-auto max-w-7xl">
+        {/* Cabecera editorial */}
+        <div className="mx-auto mb-16 max-w-2xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 border border-amber-700/25 bg-amber-500/10 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-amber-800">
+            <ForkKnifeIcon size={15} weight="bold" className="text-amber-600" />
             <span>Nuestro Equipo</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl text-stone-900 mb-4">
-            Pasión por la Gastronomía & Servicio
+
+          <h2 className="mb-4 font-serif text-4xl font-bold leading-[1.08] tracking-tight text-stone-950 sm:text-5xl">
+            Pasión por la{" "}
+            <span className="italic text-amber-700">Gastronomía</span>
           </h2>
-          <p className="text-stone-600 text-sm font-light leading-relaxed">
+
+          <p className="text-base font-light leading-relaxed text-stone-600">
             Un equipo de profesionales en cocina y sala dedicados a ofrecerte
-            una experiencia inolvidable.
+            una experiencia cercana e inolvidable.
           </p>
         </div>
 
-        {/* Carrusel Swiper */}
-        <div className="relative">
+        {/* Carrusel Swiper o grid estático SSR */}
+        {!mounted ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {TEAM_MEMBERS.slice(0, 3).map((member) => (
+              <div
+                key={member.name}
+                className="aspect-[4/5] w-full border border-stone-200 bg-stone-200/50"
+              />
+            ))}
+          </div>
+        ) : (
           <Swiper
             modules={[Autoplay, Navigation]}
             loop={true}
@@ -69,31 +103,36 @@ export const Team = () => {
             }}
             className="pb-4"
           >
-            {teamMembers.map((member, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex flex-col items-center text-center group">
-                  <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden shadow-sm border border-stone-200/80">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
-                    />
-                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-stone-950/80 via-stone-950/40 to-transparent p-5 text-left flex flex-col justify-end">
-                      <h3 className="font-serif text-lg font-bold text-white tracking-wide">
-                        {member.name}
-                      </h3>
-                      <span className="text-amber-300 text-xs uppercase tracking-wider font-medium mt-0.5">
-                        {member.role}
-                      </span>
-                    </div>
+            {TEAM_MEMBERS.map((member) => (
+              <SwiperSlide key={member.name}>
+                <article className="group relative aspect-[4/5] w-full overflow-hidden border border-stone-200/90 border-b-4 border-b-stone-950 bg-stone-950 transition-colors duration-300 hover:border-b-amber-500">
+                  <Image
+                    src={member.image}
+                    alt={`${member.name} - ${member.role}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="pointer-events-none object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Etiqueta numérica superior */}
+                  <div className="absolute right-4 top-4 z-10 bg-stone-950/80 px-2.5 py-1 font-serif text-xs font-bold tracking-widest text-amber-400 backdrop-blur-sm">
+                    {member.number}
                   </div>
-                </div>
+
+                  {/* Viñeta inferior con datos del profesional */}
+                  <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-stone-950 via-stone-950/70 to-transparent p-6 pt-20 text-left">
+                    <span className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-amber-400">
+                      {member.role}
+                    </span>
+                    <h3 className="font-serif text-2xl font-bold tracking-tight text-white">
+                      {member.name}
+                    </h3>
+                  </div>
+                </article>
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        )}
       </div>
     </section>
   );

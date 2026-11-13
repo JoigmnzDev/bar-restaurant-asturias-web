@@ -28,7 +28,7 @@ export const siteConfig = {
   },
   social: {
     instagram: "https://instagram.com/bar_restaurant_asturias",
-    facebook: "https://facebook.com/barrestaurantasturias",
+    facebook: "https://facebook.com/share/1FH6gpyJgo/?mibextid=wwXlfr",
     tripadvisor: "https://tripadvisor.es/...",
     googleReviews: "https://g.page/...",
   },

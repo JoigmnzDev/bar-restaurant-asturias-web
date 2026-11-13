@@ -1,72 +1,84 @@
-"use client";
-
 import Image from "next/image";
 import { ForkKnifeIcon } from "@phosphor-icons/react/dist/ssr";
+
+const HIGHLIGHTS = [
+  { label: "Cocina", value: "100% Casera" },
+  { label: "Producto", value: "Fresco del Día" },
+  { label: "Ubicación", value: "Arrecife" },
+];
 
 export const About = () => {
   return (
     <section
       id="about"
-      className="bg-[#FAF8F5] py-20 px-4 sm:px-8 overflow-hidden"
+      className="overflow-hidden border-b border-stone-200/80 bg-[#FAF8F5] px-4 py-24 sm:px-8 lg:py-32"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-2 text-amber-700 font-medium text-xs tracking-[0.2em] uppercase">
-            <ForkKnifeIcon size={16} className="text-amber-600" />
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-16">
+        {/* Columna de texto editorial */}
+        <div className="flex flex-col gap-6 lg:col-span-6">
+          <div className="inline-flex w-fit items-center gap-2 border border-amber-700/25 bg-amber-500/10 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-amber-800">
+            <ForkKnifeIcon size={15} weight="bold" className="text-amber-600" />
             <span>Sobre Nosotros</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-stone-900 leading-tight">
-            Tradición y sabor en cada plato
+
+          <h2 className="font-serif text-4xl font-bold leading-[1.08] tracking-tight text-stone-950 sm:text-5xl lg:text-[3.25rem]">
+            Tradición y sabor{" "}
+            <span className="italic text-amber-700">en cada plato</span>
           </h2>
-          <p className="text-stone-600 text-sm leading-relaxed">
-            Ofrecemos lo mejor de la cocina tradicional, cuidando cada
-            ingrediente para brindar una experiencia gastronómica auténtica.
-            Nuestro compromiso es hacerte sentir como en casa con platos
-            elaborados con pasión y recetas de siempre.
-          </p>
-          <p className="text-stone-600 text-sm leading-relaxed">
-            Un espacio donde la buena comida y el ambiente acogedor se unen para
-            crear momentos especiales en Arrecife.
-          </p>
-          <div className="felx- hidden items-center justify-between pt-4 border-t border-stone-200/80 mt-2">
-            <div>
-              <span className="font-serif italic text-xl text-stone-800 block">
-                Chef Alfred Nabutil
-              </span>
-              <span className="text-xs text-stone-500 uppercase tracking-wider font-sans">
-                Jefe de Cocina
-              </span>
-            </div>
+
+          <div className="space-y-4 text-base font-light leading-relaxed text-stone-600">
+            <p>
+              Ofrecemos lo mejor de la cocina tradicional asturiana, cuidando
+              cada ingrediente y respetando los tiempos de cocción para brindar
+              una experiencia gastronómica auténtica.
+            </p>
+            <p>
+              Nuestro compromiso es hacerte sentir como en casa: raciones
+              generosas, recetas de siempre y un ambiente cercano pensado para
+              compartir momentos especiales en Arrecife.
+            </p>
+          </div>
+
+          {/* Barra de pilares clave */}
+          <div className="mt-4 grid grid-cols-3 gap-4 border-t border-stone-300/80 pt-6">
+            {HIGHLIGHTS.map((item) => (
+              <div key={item.label} className="flex flex-col">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                  {item.label}
+                </span>
+                <span className="mt-1 font-serif text-base font-bold text-stone-900 sm:text-lg">
+                  {item.value}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="relative flex justify-center lg:justify-end">
-          <div className="relative w-full max-w-lg aspect-[4/3] sm:aspect-square">
-            <div className="absolute top-0 right-0 w-[80%] h-[75%] rounded-lg overflow-hidden shadow-md">
+
+        {/* Columna visual con marco arquitectónico */}
+        <div className="relative flex justify-center lg:col-span-6 lg:justify-end">
+          <div className="relative w-full max-w-xl">
+            {/* Marco desplazado de fondo */}
+            <div className="absolute -bottom-4 -right-4 hidden h-full w-full border border-stone-300 bg-stone-200/40 sm:block" />
+
+            {/* Fotografía principal */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-900 shadow-xl">
               <Image
                 src="/images/about/restaurant-interior.jpg"
-                alt="Interior del restaurante"
+                alt="Interior del restaurante Asturias"
                 fill
-                sizes="(max-width: 1024px) 80vw, 40vw"
-                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover transition-transform duration-700 hover:scale-105"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/30 via-transparent to-transparent" />
             </div>
-            <div className="absolute- hidden bottom-0 left-0 w-[55%] h-[60%] rounded-lg overflow-hidden shadow-xl border-4 border-[#FAF8F5]">
-              <Image
-                src="/images/about/chef-preparing-dish.jpg"
-                alt="Cocinero preparando plato"
-                fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute top-[10%] left-[5%] bg-stone-900 text-white p-5 rounded-sm shadow-xl flex flex-col items-center justify-center text-center border-l-2 border-amber-600 z-10">
-              <span className="font-serif text-3xl font-bold text-amber-500 leading-none mb-1">
+
+            {/* Sello de trayectoria */}
+            <div className="relative -mt-10 ml-4 inline-flex flex-col items-start border-l-4 border-amber-500 bg-stone-950 px-6 py-5 text-white shadow-2xl sm:absolute sm:-bottom-6 sm:-left-6 sm:mt-0 sm:ml-0">
+              <span className="font-serif text-4xl font-bold leading-none text-amber-400">
                 15+
               </span>
-              <span className="text-[10px] uppercase tracking-wider text-stone-300 font-light">
-                Años de
-                <br />
-                Experiencia
+              <span className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-300">
+                Años de Experiencia
               </span>
             </div>
           </div>
