@@ -10,7 +10,7 @@ export const siteConfig = {
   contact: {
     phone: "+34 928 38 04 27",
     phoneDisplay: "928 38 04 27",
-    whatsapp: "+34669355881",
+    whatsapp: "+34 669 35 58 81",
     email: "",
   },
   location: {
@@ -22,8 +22,8 @@ export const siteConfig = {
     googleMapsUrl: "https://maps.google.com/?q=...",
   },
   openingHours: {
-    weekdays: "13:00 - 23:00",
-    sunday: "13:00 - 16:00 | 19:00 - 23:00",
+    weekdays: "13:00 - 00:00",
+    sunday: "13:00 - 16:00 | 19:00 -00:00",
     tuesday: "Cerrado",
   },
   social: {

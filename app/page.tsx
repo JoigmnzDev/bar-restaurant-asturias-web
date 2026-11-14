@@ -8,6 +8,8 @@ import Features from "@/components/pages/landing/features";
 import Testimonials from "@/components/pages/landing/testimonials";
 import Team from "@/components/pages/landing/team";
 import dynamic from "next/dynamic";
+import MenuSection from "@/components/pages/landing/menu";
+import CustomerMoments from "@/components/pages/landing/customer-moments";
 
 const InfiniteGallery = dynamic(
   () =>
@@ -24,9 +26,11 @@ export default function Home() {
       <Hero />
       <About />
       <Features />
+      <MenuSection />
       <InfiniteGallery />
       <Testimonials />
       <Team />
+      <CustomerMoments />
       <Footer />
     </main>
   );

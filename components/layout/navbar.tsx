@@ -14,10 +14,11 @@ import {
 import { siteConfig } from "@/config/site";
 
 const NAV_LINKS = [
-  { href: "/", label: "Inicio" },
   { href: "#about", label: "Nosotros" },
+  { href: "#menu", label: "Carta" },
   { href: "#testimonials", label: "Testimonios" },
   { href: "#team", label: "Equipo" },
+  { href: "#moments", label: "Momentos" },
 ];
 
 export const Navbar = () => {
@@ -73,25 +74,28 @@ export const Navbar = () => {
 
       {/* Navegación principal */}
       <nav className="border-b border-stone-200/80 bg-[#FAF8F5]/95 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-8">
-          {/* Marca / Logotipo editorial */}
-          <Link href="/" className="group flex flex-col">
-            <span className="font-serif text-2xl font-bold tracking-tight text-stone-950 transition-colors group-hover:text-amber-700 sm:text-3xl">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-8">
+          {/* Marca / Logotipo editorial protegido */}
+          <Link
+            href="/"
+            className="group inline-flex shrink-0 flex-col items-center text-center"
+          >
+            <span className="whitespace-nowrap font-serif text-2xl font-bold tracking-tight text-stone-950 transition-colors group-hover:text-amber-700 sm:text-3xl">
               Asturias
             </span>
-            <span className="-mt-1 text-[9px] font-bold uppercase tracking-[0.32em] text-amber-700">
+            <span className="-mt-1 whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.28em] text-amber-700">
               Bar &amp; Restaurant
             </span>
           </Link>
 
-          {/* Enlaces Desktop */}
-          <div className="hidden items-center gap-8 md:flex">
-            <div className="flex items-center gap-7">
+          {/* Enlaces Desktop (a partir de lg: 1024px) */}
+          <div className="hidden items-center gap-6 lg:flex xl:gap-8">
+            <div className="flex items-center gap-5 xl:gap-7">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs font-bold uppercase tracking-[0.18em] text-stone-700 transition-colors hover:text-amber-600"
+                  className="whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.18em] text-stone-700 transition-colors hover:text-amber-600 xl:text-xs"
                 >
                   {link.label}
                 </Link>
@@ -100,7 +104,7 @@ export const Navbar = () => {
 
             <a
               href="#contacto"
-              className="group inline-flex items-center gap-2 bg-stone-950 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#FAF8F5] transition-all hover:bg-amber-500 hover:text-stone-950"
+              className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap bg-stone-950 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#FAF8F5] transition-all hover:bg-amber-500 hover:text-stone-950"
             >
               Reservar
               <ArrowUpRightIcon
@@ -111,11 +115,11 @@ export const Navbar = () => {
             </a>
           </div>
 
-          {/* Botón menú móvil */}
+          {/* Botón menú móvil / tablet (< 1024px) */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-stone-950 transition-colors hover:text-amber-600 md:hidden"
+            className="p-2 text-stone-950 transition-colors hover:text-amber-600 lg:hidden"
             aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isOpen}
           >
@@ -127,9 +131,9 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Desplegable móvil */}
+        {/* Desplegable móvil / tablet */}
         {isOpen && (
-          <div className="flex flex-col border-b border-stone-200 bg-[#FAF8F5] px-6 py-8 md:hidden">
+          <div className="flex flex-col border-b border-stone-200 bg-[#FAF8F5] px-6 py-8 lg:hidden">
             <div className="flex flex-col divide-y divide-stone-200/70">
               {NAV_LINKS.map((link) => (
                 <Link
