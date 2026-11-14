@@ -6,6 +6,7 @@ import {
   ClockIcon,
   ForkKnifeIcon,
   ArrowUpRightIcon,
+  WhatsappLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { siteConfig } from "@/config/site";
 import { FacebookLogoIcon } from "@phosphor-icons/react";
@@ -65,7 +66,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 gap-12 border-b border-stone-800/90 py-16 md:grid-cols-2 lg:grid-cols-4">
           {/* Columna 1: Identidad de marca */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="group flex flex-col">
+            <Link
+              href="/"
+              className="group inline-flex w-fit flex-col items-center self-start text-center"
+            >
               <span className="font-serif text-3xl font-bold tracking-tight text-white transition-colors group-hover:text-amber-400">
                 Asturias
               </span>
@@ -184,6 +188,19 @@ export const Footer = () => {
                   className="font-medium text-stone-200 transition-colors hover:text-amber-400"
                 >
                   {siteConfig.contact.phone}
+                </a>
+              </p>
+              <p className="flex items-center gap-2.5">
+                <WhatsappLogoIcon
+                  size={16}
+                  weight="bold"
+                  className="shrink-0 text-amber-400"
+                />
+                <a
+                  href={`tel:${siteConfig.contact.whatsapp}`}
+                  className="font-medium text-stone-200 transition-colors hover:text-amber-400"
+                >
+                  {siteConfig.contact.whatsapp}
                 </a>
               </p>
             </div>
