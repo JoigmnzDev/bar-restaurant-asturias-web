@@ -11,7 +11,7 @@ import {
   ArrowUpRightIcon,
   FacebookLogoIcon,
 } from "@phosphor-icons/react";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/data/site";
 
 const NAV_LINKS = [
   { href: "#about", label: "Nosotros" },
@@ -26,7 +26,6 @@ export const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full font-sans text-stone-900">
-      {/* Topbar informativa oscura */}
       <div className="border-b border-stone-800 bg-stone-950 px-4 py-2 text-xs text-stone-300 sm:px-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 sm:flex-row">
           <div className="flex items-center gap-2">
@@ -72,10 +71,8 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Navegación principal */}
       <nav className="border-b border-stone-200/80 bg-[#FAF8F5]/95 backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-8">
-          {/* Marca / Logotipo editorial protegido */}
           <Link
             href="/"
             className="group inline-flex shrink-0 flex-col items-center text-center"
@@ -88,7 +85,6 @@ export const Navbar = () => {
             </span>
           </Link>
 
-          {/* Enlaces Desktop (a partir de lg: 1024px) */}
           <div className="hidden items-center gap-6 lg:flex xl:gap-8">
             <div className="flex items-center gap-5 xl:gap-7">
               {NAV_LINKS.map((link) => (
@@ -115,7 +111,6 @@ export const Navbar = () => {
             </a>
           </div>
 
-          {/* Botón menú móvil / tablet (< 1024px) */}
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
@@ -131,7 +126,6 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Desplegable móvil / tablet */}
         {isOpen && (
           <div className="flex flex-col border-b border-stone-200 bg-[#FAF8F5] px-6 py-8 lg:hidden">
             <div className="flex flex-col divide-y divide-stone-200/70">
@@ -162,4 +156,3 @@ export const Navbar = () => {
   );
 };
 
-export default Navbar;

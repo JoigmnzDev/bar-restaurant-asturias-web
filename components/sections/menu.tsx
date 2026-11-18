@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ForkKnifeIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/data/site";
 
 type CategoryId = "entrantes" | "principales" | "postres";
 
@@ -264,4 +264,3 @@ export const MenuSection = () => {
   );
 };
 
-export default MenuSection;

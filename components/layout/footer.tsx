@@ -7,9 +7,9 @@ import {
   ForkKnifeIcon,
   ArrowUpRightIcon,
   WhatsappLogoIcon,
+  FacebookLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
-import { siteConfig } from "@/config/site";
-import { FacebookLogoIcon } from "@phosphor-icons/react";
+import { siteConfig } from "@/data/site";
 
 const FOOTER_LINKS = [
   { href: "/", label: "Inicio" },
@@ -26,7 +26,6 @@ export const Footer = () => {
       className="border-t-4 border-amber-500 bg-stone-950 font-sans text-stone-300"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
-        {/* Bloque superior CTA de reserva */}
         <div className="flex flex-col items-start justify-between gap-8 border-b border-stone-800/90 py-14 lg:flex-row lg:items-center">
           <div>
             <span className="mb-2 inline-block text-[11px] font-bold uppercase tracking-[0.25em] text-amber-400">
@@ -62,9 +61,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Grid principal de 4 columnas */}
         <div className="grid grid-cols-1 gap-12 border-b border-stone-800/90 py-16 md:grid-cols-2 lg:grid-cols-4">
-          {/* Columna 1: Identidad de marca */}
           <div className="flex flex-col gap-4">
             <Link
               href="/"
@@ -106,7 +103,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Columna 2: Navegación */}
           <div>
             <h3 className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white">
               <ForkKnifeIcon
@@ -130,7 +126,6 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Columna 3: Horarios */}
           <div>
             <h3 className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white">
               <ClockIcon size={15} weight="bold" className="text-amber-400" />
@@ -158,7 +153,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Columna 4: Ubicación y contacto */}
           <div>
             <h3 className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white">
               <MapPinIcon size={15} weight="bold" className="text-amber-400" />
@@ -207,24 +201,23 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Barra inferior de copyright y legales */}
         <div className="flex flex-col items-center justify-between gap-4 py-8 text-[11px] text-stone-500 sm:flex-row">
           <p>© 2026 Bar Restaurante Asturias. Todos los derechos reservados.</p>
           <div className="flex flex-wrap justify-center gap-6">
             <Link
-              href="#"
+              href="/legal"
               className="uppercase tracking-wider transition-colors hover:text-stone-300"
             >
               Aviso Legal
             </Link>
             <Link
-              href="#"
+              href="/privacy"
               className="uppercase tracking-wider transition-colors hover:text-stone-300"
             >
               Privacidad
             </Link>
             <Link
-              href="#"
+              href="/cookies"
               className="uppercase tracking-wider transition-colors hover:text-stone-300"
             >
               Cookies
@@ -236,4 +229,3 @@ export const Footer = () => {
   );
 };
 
-export default Footer;

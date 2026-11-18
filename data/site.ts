@@ -1,5 +1,3 @@
-// config/site.ts
-
 export const siteConfig = {
   name: "Bar & Restaurant Asturias",
   legalName: "Bar & Restaurant Asturias S.L.",
@@ -33,5 +31,3 @@ export const siteConfig = {
     googleReviews: "https://g.page/...",
   },
 } as const;
-
-export type SiteConfig = typeof siteConfig;

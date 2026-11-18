@@ -135,4 +135,3 @@ export const CustomerMoments = () => {
   );
 };
 
-export default CustomerMoments;
