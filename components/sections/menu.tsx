@@ -17,99 +17,90 @@ interface Dish {
 }
 
 const CATEGORIES: { id: CategoryId; label: string }[] = [
-  { id: "entrantes", label: "Para Compartir" },
-  { id: "principales", label: "Platos Principales" },
+  { id: "entrantes", label: "Tapas y Entrantes" },
+  { id: "principales", label: "Carnes, Pescados y Arroces" },
   { id: "postres", label: "Postres Caseros" },
 ];
 
 const DISHES: Dish[] = [
-  // Entrantes
+  // Tapas y Entrantes
   {
-    name: "Croquetas Caseras",
+    name: "Croquetas del Día (Casera)",
     category: "entrantes",
-    price: "11,50 €",
+    price: "1,80 €",
     description:
-      "Cremosas por dentro y crujientes por fuera, elaboradas a diario según receta tradicional.",
+      "Cremosas por dentro y crujientes por fuera, elaboradas a diario según receta tradicional (precio por unidad).",
     image: "/images/dishes/croquettes.jpg",
     tag: "Especialidad",
   },
   {
-    name: "Calamares Saharianos Fritos",
+    name: "Calamar Sahariano Frito",
     category: "entrantes",
-    price: "14,00 €",
+    price: "18,50 €",
     description:
-      "Fritura limpia y crujiente con producto fresco de lonja y toque cítrico.",
+      "Fritura limpia y crujiente con producto fresco de lonja, acompañado de papas y ensalada.",
     image: "/images/dishes/fried-saharan-squid.jpg",
   },
   {
     name: "Gambas al Ajillo",
     category: "entrantes",
-    price: "13,50 €",
+    price: "10,95 €",
     description:
       "Salteadas en cazuela de barro con aceite de oliva virgen extra, ajo laminado y guindilla.",
     image: "/images/dishes/garlic-prawns.jpg",
   },
   {
-    name: "Tartar de Atún",
+    name: "Tartar de Atún con Aguacate",
     category: "entrantes",
-    price: "15,50 €",
+    price: "15,95 €",
     description:
-      "Corte a cuchillo de atún fresco marinado con aguacate y aliño suave de la casa.",
+      "Corte a cuchillo de atún fresco sobre aguacate con mayonesa de aguacate y wasabi.",
     image: "/images/dishes/tuna-tartare.jpg",
   },
   {
-    name: "Ensaladilla Rusa",
+    name: "Ensaladilla Rusa con Ventresca",
     category: "entrantes",
     price: "9,50 €",
     description:
-      "Elaboración casera con patata seleccionada, ventresca y mayonesa suave.",
+      "Elaboración casera tradicional coronada con ventresca de atún seleccionada.",
     image: "/images/dishes/russian-salad.jpg",
   },
   {
     name: "Pollo Crujiente",
     category: "entrantes",
-    price: "11,00 €",
+    price: "11,95 €",
     description:
-      "Tiras de pechuga marinadas con rebozado extra crujiente y salsa de la casa.",
+      "Tiras de pollo con rebozado extra crujiente, papas fritas y salsa de gochujang.",
     image: "/images/dishes/crispy-chicken.jpg",
   },
 
-  // Principales
+  // Carnes, Pescados y Arroces
   {
-    name: "Cachopo Asturiano (800g)",
+    name: "Cachopo de Ternera (800g)",
     category: "principales",
-    price: "24,50 €",
+    price: "39,95 €",
     description:
-      "Filetes de ternera rellenos de jamón serrano y queso fundido, acompañados de patatas y pimientos.",
+      "Ideal para 2 personas. Filetes de ternera rellenos de jamón y queso fundido con guarnición.",
     image: "/images/dishes/cachopo.jpg",
     tag: "Estrella",
   },
   {
-    name: "Paella de Pescado y Mariscos",
+    name: "Arroz Negro Cremoso",
     category: "principales",
-    price: "18,50 €",
+    price: "15,90 €",
     description:
-      "Arroz en su punto cocinado con fumet casero de roca, marisco fresco y pescado del día.",
-    image: "/images/dishes/seafood-paella.jpg",
-  },
-  {
-    name: "Arroz Negro",
-    category: "principales",
-    price: "17,50 €",
-    description:
-      "Con tinta natural de calamar, chipirones tiernos y alioli suave casero.",
+      "Arroz meloso en su punto con tinta natural de calamar, chipirones y langostino.",
     image: "/images/dishes/black-rice.jpg",
   },
   {
     name: "Lomo de Bacalao",
     category: "principales",
-    price: "19,00 €",
+    price: "18,95 €",
     description:
-      "Confitado a baja temperatura sobre cama de verduras salteadas y guarnición tradicional.",
+      "Con tomate cherry, aceituna negra, salsa cremosa de azafrán y aceite de albahaca con guarnición.",
     image: "/images/dishes/cod-loin.jpg",
   },
-
-  // Postres
+  // Postres Caseros
   {
     name: "Tarta de Queso Casera",
     category: "postres",
@@ -148,7 +139,6 @@ export const MenuSection = () => {
       className="border-b border-stone-200/80 bg-[#FAF8F5] px-4 py-20 sm:px-8 lg:py-24"
     >
       <div className="mx-auto max-w-6xl">
-        {/* Cabecera compacta */}
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <div className="mb-3 inline-flex items-center gap-2 border border-amber-700/25 bg-amber-500/10 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-amber-800">
             <ForkKnifeIcon size={15} weight="bold" className="text-amber-600" />
@@ -161,16 +151,15 @@ export const MenuSection = () => {
           </h2>
 
           <p className="text-sm font-light leading-relaxed text-stone-600 sm:text-base">
-            Especialidades asturianas y de mercado. Consulta nuestras
-            sugerencias frescas del día en sala.
+            Especialidades asturianas y cocina de mercado en Arrecife. Consulta
+            nuestra carta completa y sugerencias del día en sala.
           </p>
         </div>
 
-        {/* Pestañas de categorías */}
         <div
           role="tablist"
           aria-label="Categorías de la carta"
-          className="mb-10 flex flex-wrap items-center justify-center gap-2.5"
+          className="relative z-10 mb-10 flex w-full flex-nowrap items-center justify-start gap-2.5 overflow-x-auto pb-2 touch-pan-x sm:justify-center sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {CATEGORIES.map((category) => {
             const isActive = activeCategory === category.id;
@@ -181,7 +170,7 @@ export const MenuSection = () => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] transition-all ${
+                className={`shrink-0 cursor-pointer whitespace-nowrap px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] transition-colors ${
                   isActive
                     ? "bg-stone-950 text-amber-400 shadow-sm"
                     : "border border-stone-300 bg-white text-stone-700 hover:border-stone-950 hover:text-stone-950"
@@ -193,7 +182,6 @@ export const MenuSection = () => {
           })}
         </div>
 
-        {/* Lista editorial compacta en 2 columnas */}
         <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
           {filteredDishes.map((dish) => (
             <article
@@ -240,11 +228,10 @@ export const MenuSection = () => {
           ))}
         </div>
 
-        {/* Nota inferior y CTA */}
         <div className="mt-10 flex flex-col items-center justify-between gap-4 pt-4 sm:flex-row">
           <p className="text-center text-xs font-light text-stone-500 sm:text-left">
-            * Precios orientativos sujetos a producto de temporada. Carta de
-            alérgenos disponible en el local.
+            * Todos nuestros pescados y carnes principales incluyen guarnición.
+            Carta de alérgenos disponible en el local.
           </p>
 
           <a
@@ -263,4 +250,3 @@ export const MenuSection = () => {
     </section>
   );
 };
-
