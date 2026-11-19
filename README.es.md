@@ -1,13 +1,13 @@
-# 🍽️ Bar & Restaurant Asturias — Official Website
+# 🍽️ Bar & Restaurant Asturias — Web Oficial
 
-_Read this in [Spanish](README.es.md)._
+_Leer en [Inglés](README.md)._
 
-Official corporate website developed for **Bar & Restaurant Asturias** (Arrecife, Lanzarote). Designed with a mobile-first, editorial approach to showcase the restaurant's identity, featured dishes, and direct booking channels.
+Sitio web corporativo oficial desarrollado para **Bar & Restaurant Asturias** (Arrecife, Lanzarote). Diseñado con un enfoque _mobile-first_ y estilo editorial para presentar la identidad del restaurante, una selección de sus platos destacados y sus canales de reserva directa.
 
-🔗 **Live Production Site:** [https://www.barrestaurantasturias.com/](https://www.barrestaurantasturias.com/)
+🔗 **Web en producción:** [https://www.barrestaurantasturias.com/](https://www.barrestaurantasturias.com/)
 
 ---
 
-## ✨ Key Features
+## ✨ Características principales
 
-- **Featured Menu Showcase:** Interactive category filtering (_Tapas y Entrantes_, _Carnes, Pescados y Arroces_, _Postres Caseros_) highlighting signature dishes with horizontal touch scrolling on mobile devices.
+- **Selección de platos destacados:** Filtrado interactivo por categorías (_Tapas y Entrantes_, _Carnes, Pescados y Arroces_, _Postres Caseros_) con desplazamiento táctil horizontal optimizado para dispositivos móviles.
